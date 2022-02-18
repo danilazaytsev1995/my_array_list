@@ -113,4 +113,30 @@ public class MyArrayList<E> {
             size++; // увеличиваем счетчик заполненных элементов
         }
     }
+
+    public void doSort(int start, int end) {
+        if (start >= end)
+            return;
+        int i = start, j = end;
+        int cur = i - (i - j) / 2;
+        while (i < j) {
+            while (i < cur && ((int) elements[i] <= (int) elements[cur])) {
+                i++;
+            }
+            while (j > cur && ((int) elements[cur] <= (int) elements[j])) {
+                j--;
+            }
+            if (i < j) {
+                int temp = (int) elements[i];
+                elements[i] = elements[j];
+                elements[j] = temp;
+                if (i == cur)
+                    cur = j;
+                else if (j == cur)
+                    cur = i;
+            }
+        }
+        doSort(start, cur);
+        doSort(cur+1, end);
+    }
 }
