@@ -1,16 +1,18 @@
 import java.util.AbstractList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MyArrayList<E> {
     private Object [] elements; //массив
     private int size; //счетчик заполненных элементов в массиве
     private static final int DEFAULT_CAPACITY = 10; //размер массива по умолчанию
+    private QuickSort  <E> quickSort = new QuickSort();
 
     /**
      * конструктор без параметров, который создает массив на 10 элементов, если размер не был указан
      */
     public MyArrayList() {
-        this.elements = new Object[DEFAULT_CAPACITY];
+        this.elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     /**
@@ -19,7 +21,7 @@ public class MyArrayList<E> {
      */
     public MyArrayList(int initialCapacity) {
         if (initialCapacity >= 0) {
-            this.elements = new Object[initialCapacity];
+            this.elements = (E[]) new Object[initialCapacity];
         }
         else {
             throw new IllegalStateException("Capacity can't be less than 0!");
@@ -37,8 +39,8 @@ public class MyArrayList<E> {
      * метод для увеличения емкости массива
      * @return возвращает новый массив
      */
-    private Object [] increaseCapacity() {
-        Object [] temp = new Object[(elements.length * 2)]; // создаем новый массив вдвое больше
+    private E [] increaseCapacity() {
+        E [] temp = (E[]) new Object[(elements.length * 2)]; // создаем новый массив вдвое больше
         System.arraycopy(elements, 0, temp, 0, elements.length); // копируем элементы в новый массив
         return temp;
     }
@@ -81,11 +83,11 @@ public class MyArrayList<E> {
      * @param index
      * @return возвращаем удаленный элемент
      */
-    public Object remove(int index) {
+    public E remove(int index) {
         if (isIndexExist(index) == true) { // проверяем, что индекс в границах массива
-            Object [] temp = elements; // копируем массив
-            elements = new Object[temp.length - 1]; // создаем новый массив на 1 меньше
-            Object value = temp[index]; // сохраняем элемент по индексу, чтобы вернуть его
+            E [] temp = (E[]) elements; // копируем массив
+            elements = (E[]) new Object[temp.length - 1]; // создаем новый массив на 1 меньше
+            E value = temp[index]; // сохраняем элемент по индексу, чтобы вернуть его
             System.arraycopy(temp, 0, elements, 0, index); // копируем левую часть массива ДО индекса
             System.arraycopy(temp, index + 1, elements,
                     index, temp.length - index - 1); // копируем правую часть ОТ индекса и вставляем начиная с него
@@ -104,8 +106,8 @@ public class MyArrayList<E> {
      */
     public void add(int index, E element) {
         if (isIndexExist(index) == true) { // проверяем, что индекс в границах массива
-            Object [] temp = elements; // копируем массив
-            elements = new Object[temp.length + 1]; // создаем новый массив на 1 больше
+            E [] temp = (E[]) elements; // копируем массив
+            elements = (E[]) new Object[temp.length + 1]; // создаем новый массив на 1 больше
             System.arraycopy(temp, 0, elements,0, index); // копируем левую часть массива ДО индекса
             System.arraycopy(temp, index, elements,
                     index + 1, temp.length - index); // копируем правую начиная ОТ индекса
@@ -114,13 +116,17 @@ public class MyArrayList<E> {
         }
     }
 
-    public void doSort(int start, int end) {
+    public void sort (Comparator<E> comparator) {
+        quickSort.sort((E[])this.elements, comparator);
+    }
+
+    /*public void doSort(int start, int end) {
         if (start >= end)
             return;
         int i = start, j = end;
         int cur = i - (i - j) / 2;
         while (i < j) {
-            while (i < cur && ((int) elements[i] <= (int) elements[cur])) {
+            while (i < cur && ((E) elements[i] <= (E) elements[cur])) {
                 i++;
             }
             while (j > cur && ((int) elements[cur] <= (int) elements[j])) {
@@ -138,5 +144,5 @@ public class MyArrayList<E> {
         }
         doSort(start, cur);
         doSort(cur+1, end);
-    }
+    }*/
 }
