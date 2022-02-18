@@ -1,6 +1,4 @@
-import java.util.AbstractList;
 import java.util.Comparator;
-import java.util.List;
 
 public class MyArrayList<E> {
     private Object [] elements; //массив
@@ -119,30 +117,4 @@ public class MyArrayList<E> {
     public void sort (Comparator<E> comparator) {
         quickSort.sort((E[])this.elements, comparator);
     }
-
-    /*public void doSort(int start, int end) {
-        if (start >= end)
-            return;
-        int i = start, j = end;
-        int cur = i - (i - j) / 2;
-        while (i < j) {
-            while (i < cur && ((E) elements[i] <= (E) elements[cur])) {
-                i++;
-            }
-            while (j > cur && ((int) elements[cur] <= (int) elements[j])) {
-                j--;
-            }
-            if (i < j) {
-                int temp = (int) elements[i];
-                elements[i] = elements[j];
-                elements[j] = temp;
-                if (i == cur)
-                    cur = j;
-                else if (j == cur)
-                    cur = i;
-            }
-        }
-        doSort(start, cur);
-        doSort(cur+1, end);
-    }*/
 }

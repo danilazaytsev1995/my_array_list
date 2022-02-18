@@ -1,9 +1,5 @@
 import org.junit.Assert;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class MyArrayListTest {
     private MyArrayList<Integer> list1;
 
